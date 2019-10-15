@@ -20,13 +20,43 @@ const Feedback = (props) => {
   );
 }
 
-const Statistics = (props) => {
+const Statistic = ({text, value}) => {
   return (
-    <div>
-      <h2>statistics</h2>
-      <p>good {props.good}<br/>neutral {props.neutral}<br/>bad {props.bad}</p>
-    </div>
+    <tr>
+      <th>{text}</th>
+      <th>{value}</th>
+    </tr>
   );
+}
+
+const Statistics = ({good, neutral, bad}) => {
+  const all = good + neutral + bad;
+  let avg = (good - bad) / all;
+  let pos = good / all * 100;
+  
+  if (good === 0 && neutral === 0 && bad === 0)
+    return (
+      <div>
+        <h2>statistics</h2>
+        <p>No feedback given</p>
+      </div>
+    );
+  else
+    return (
+      <div>
+        <h2>statistics</h2>
+        <table>
+          <tbody>
+            <Statistic text='good' value={good} />
+            <Statistic text='neutral' value={neutral} />
+            <Statistic text='bad' value={bad} />
+            <Statistic text='all' value={all} />
+            <Statistic text='average' value={avg} />
+            <Statistic text='positive' value={pos + '%'} />
+          </tbody>
+        </table>
+      </div>
+    );
 }
 
 const App = () => {
