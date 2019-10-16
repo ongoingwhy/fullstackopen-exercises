@@ -65,14 +65,14 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  const increaseGood = () => () =>  setGood(good + 1);
-  const increaseNeutral = () => () => setNeutral(neutral + 1);
-  const increaseBad = () => () => setBad(bad + 1);
+  const increaseGood = () => setGood(good + 1);
+  const increaseNeutral = () => setNeutral(neutral + 1);
+  const increaseBad = () => setBad(bad + 1);
 
   return (
     <div>
-      <Feedback increaseGood={increaseGood()} increaseNeutral={increaseNeutral()} 
-      increaseBad={increaseBad()} />
+      <Feedback increaseGood={increaseGood} increaseNeutral={increaseNeutral} 
+      increaseBad={increaseBad} />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
