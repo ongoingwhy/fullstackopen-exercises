@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
+import axios from 'axios'
 
 const Filter =({onchange, filter}) => <input value={filter} onChange={onchange}/>
 
-const InputForm = ({onsubmit, onchangeName, onchangeNum, onchangeFilter, newName, newNum, filter}) => {
+const InputForm = ({onsubmit, onchangeName, onchangeNum, newName, newNum}) => {
     return (
         <form onSubmit={onsubmit}>
             <div>
@@ -18,7 +19,7 @@ const InputForm = ({onsubmit, onchangeName, onchangeNum, onchangeFilter, newName
     );
 }
 
-const Contact = ({name, number}) => <li key={name}>{name} {number}</li>
+const Contact = ({name, number}) => <li>{name} {number}</li>
 
 const Contacts = ({contacts, filter}) => {
     const rows = () => {
@@ -28,7 +29,7 @@ const Contacts = ({contacts, filter}) => {
       }
 
       return (
-        display.map( (contact) => <Contact name={contact.name} number={contact.number} />)
+        display.map( (contact) => <Contact key={contact.name} name={contact.name} number={contact.number} />)
       );
     }
 
@@ -40,12 +41,7 @@ const Contacts = ({contacts, filter}) => {
 }
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]);
+  const [ persons, setPersons] = useState([]);
   const [ newName, setNewName ] = useState('');
   const [ newNum, setNewNum ] = useState('');
   const [ searchFilter, setFilter ] = useState('');
@@ -68,6 +64,13 @@ const App = () => {
   const updateNewNum = (ev) => setNewNum(ev.target.value);
 
   const updateFilter = (ev) => setFilter(ev.target.value);
+
+  useEffect (() => {
+    axios.get('http://localhost:3001/persons')
+    .then(response => {
+      setPersons(response.data);
+    })
+  });
 
   return (
     <div>
