@@ -1,0 +1,41 @@
+{
+    "request": {
+        "type": "City",
+        "query": "London, United Kingdom",
+        "language": "en",
+        "unit": "m"
+    },
+    "location": {
+        "name": "London",
+        "country": "United Kingdom",
+        "region": "City of London, Greater London",
+        "lat": "51.517",
+        "lon": "-0.106",
+        "timezone_id": "Europe/London",
+        "localtime": "2019-10-17 17:50",
+        "localtime_epoch": 1571334600,
+        "utc_offset": "1.0"
+    },
+    "current": {
+        "observation_time": "04:50 PM",
+        "temperature": 15,
+        "weather_code": 116,
+        "weather_icons": [
+        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png"
+        ],
+        "weather_descriptions": [
+        "Partly cloudy"
+        ],
+        "wind_speed": 13,
+        "wind_degree": 190,
+        "wind_dir": "S",
+        "pressure": 1004,
+        "precip": 0.6,
+        "humidity": 72,
+        "cloudcover": 25,
+        "feelslike": 14,
+        "uv_index": 5,
+        "visibility": 10,
+        "is_day": "yes"
+    }
+}
