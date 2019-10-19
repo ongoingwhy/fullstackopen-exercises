@@ -13,7 +13,7 @@ const InputForm = ({onsubmit, onchangeName, onchangeNum, newName, newNum}) => {
               number: <input value={newNum} onChange={onchangeNum}/>
             </div>
             <div>
-                <button type="submit">add</button> 
+                <button type='submit'>add</button> 
             </div>
         </form>
     );
@@ -42,18 +42,46 @@ const Contacts = ({contacts, filter, onClick}) => {
     );
 }
 
+const Notification = ({message, color}) => {
+  const notificationStyle = {
+    color: color,
+    background:'grey',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    margin: 10
+  }
+
+    if (message === null)
+      return null;
+    
+    return (
+      <div style={notificationStyle}>
+        {message}
+      </div>
+    );
+}
+
 const App = () => {
   const [ persons, setPersons] = useState([]);
   const [ newName, setNewName ] = useState('');
   const [ newNum, setNewNum ] = useState('');
   const [ searchFilter, setFilter ] = useState('');
+  const [ notificationMessage, setMessage ] = useState(null);
+  const [ color, setColor ] = useState('green');
 
   const removeContact = (name, id) => {
     let result = window.confirm(`Delete ${name} ?`);
     if (result)
       contacts
       .removeContact(id)
-      .then(() => setPersons(persons.filter(person => person.id !== id)));
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id));
+        setMessage(`Deleted ${name}`);
+        setColor('green');
+        setTimeout(() => setMessage(null), 3000);
+      });
   }
 
   const addContact = (ev) => {
@@ -73,6 +101,14 @@ const App = () => {
           setPersons(persons.map(person => person.name !== newName ? person : newPerson));
           setNewName('');
           setNewNum('');
+          setMessage(`Changed ${newPerson.name}`);
+          setColor('green');
+          setTimeout(() => setMessage(null), 3000);
+        })
+        .catch(error => {
+          setMessage(`Information of ${oldPerson.name} has already been removed from the server`);
+          setColor('red');
+          setTimeout(() => setMessage(null), 3000);
         });
       }
     }
@@ -83,6 +119,9 @@ const App = () => {
         setPersons(persons.concat(newContact));
         setNewName('');
         setNewNum('');
+        setMessage(`Added ${newContact.name}`);
+        setColor('green');
+        setTimeout(() => setMessage(null), 3000);
       });
     }
   }
@@ -101,6 +140,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} color={color} />
       <Filter onchange={updateFilter} filter={searchFilter}/>
 
       <h2>add a new</h2>
